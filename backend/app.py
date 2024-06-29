@@ -7,16 +7,27 @@ from db_control import crud, mymodels
 
 import requests
 
+from dotenv import load_dotenv
+import os
+
+# .env ファイルを読み込みます
+load_dotenv()
+
+# 環境変数の使用
+api_endpoint = os.getenv('API_ENDPOINT')
+
+print(api_endpoint)
+
 # Azure Database for MySQL
 # REST APIでありCRUDを持っている
 app = Flask(__name__)
 CORS(app)
- 
+
 
 @app.route("/")
 def index():
     return "<p>Flask top page!</p>"
- 
+
 @app.route("/customers", methods=['POST'])
 def create_customer():
     values = request.get_json()

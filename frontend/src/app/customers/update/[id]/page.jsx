@@ -1,8 +1,9 @@
-"use client"
-import { useEffect, useState, useRef } from 'react';
-import { useRouter } from 'next/navigation';
+"use client";
+import { useEffect, useState, useRef } from "react";
+import { useRouter } from "next/navigation";
 import fetchCustomer from "./fetchCustomer";
 import updateCustomer from "./updateCustomer";
+import Link from "next/link";
 
 export default function UpdatePage(props) {
   const router = useRouter();
@@ -25,10 +26,10 @@ export default function UpdatePage(props) {
     router.push(`./${formData.get("customer_id")}/confirm`);
   };
 
-  const previous_customer_name = customerInfo.customer_name
-  const previous_customer_id = customerInfo.customer_id
-  const previous_age = customerInfo.age
-  const previous_gender = customerInfo.gender
+  const previous_customer_name = customerInfo.customer_name;
+  const previous_customer_id = customerInfo.customer_id;
+  const previous_age = customerInfo.age;
+  const previous_gender = customerInfo.gender;
 
   return (
     <>
@@ -37,20 +38,53 @@ export default function UpdatePage(props) {
           <form ref={formRef} onSubmit={handleSubmit}>
             <div className="card-body">
               <h2 className="card-title">
-                <p><input type="text" name="customer_name" defaultValue={previous_customer_name} className="input input-bordered" />さん</p>
+                <p>
+                  <input
+                    type="text"
+                    name="customer_name"
+                    defaultValue={previous_customer_name}
+                    className="input input-bordered"
+                  />
+                  さん
+                </p>
               </h2>
-              <p>Customer ID:<input type="text" name="customer_id" defaultValue={previous_customer_id} className="input input-bordered" /></p>
-              <p>Age:<input type="number" name="age" defaultValue={previous_age} className="input input-bordered" /></p>
-              <p>Gender:<input type="text" name="gender" defaultValue={previous_gender} className="input input-bordered" /></p>
+              <p>
+                Customer ID:
+                <input
+                  type="text"
+                  name="customer_id"
+                  defaultValue={previous_customer_id}
+                  className="input input-bordered"
+                />
+              </p>
+              <p>
+                Age:
+                <input
+                  type="number"
+                  name="age"
+                  defaultValue={previous_age}
+                  className="input input-bordered"
+                />
+              </p>
+              <p>
+                Gender:
+                <input
+                  type="text"
+                  name="gender"
+                  defaultValue={previous_gender}
+                  className="input input-bordered"
+                />
+              </p>
             </div>
             <div className="flex justify-center">
               <button className="btn btn-primary m-4 text-2xl">更新</button>
+              <Link href="/">
+                <button className="btn btn-primary m-4 text-2xl">戻る</button>
+              </Link>
             </div>
           </form>
         </div>
       </div>
     </>
-  )
+  );
 }
-
-
