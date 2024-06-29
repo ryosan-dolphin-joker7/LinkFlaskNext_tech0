@@ -1,7 +1,17 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# Environments
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+tech0_flask_env/
+
 # dependencies
-/node_modules
+/backend/node_modules
+/frontend/node_modules
 /.pnp
 .pnp.js
 .yarn/install-state.gz
@@ -11,6 +21,8 @@
 
 # next.js
 /.next/
+/frontend/.next/
+/backend/.next/
 /out/
 
 # production
@@ -35,3 +47,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+
+/__pycache__
+/backend/__pycache__
+/backend_env
+/db_control/__pycache__
+/backend/db_control/__pycache__
+**/__pycache__/**
+*.pyc
+.env
