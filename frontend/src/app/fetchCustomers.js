@@ -1,9 +1,5 @@
 export default async function fetchCustomers() {
-  //const res = await fetch(process.env.API_ENDPOINT + "/allcustomers", {
-  //  cache: "no-cache",
-  //});
-
-  const res = await fetch("http://localhost:5000/allcustomers", {
+  const res = await fetch(process.env.API_ENDPOINT + "/allcustomers", {
     cache: "no-cache",
   });
 

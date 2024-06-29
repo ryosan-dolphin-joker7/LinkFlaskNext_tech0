@@ -22,8 +22,13 @@ export default function UpdatePage(props) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(formRef.current);
-    await updateCustomer(formData);
-    router.push(`./${formData.get("customer_id")}/confirm`);
+    try {
+      const result = await updateCustomer(formData);
+      console.log("Customer updated successfully:", result);
+      router.push(`./${formData.get("customer_id")}/confirm`);
+    } catch (error) {
+      console.error("Error updating customer:", error);
+    }
   };
 
   const previous_customer_name = customerInfo.customer_name;
