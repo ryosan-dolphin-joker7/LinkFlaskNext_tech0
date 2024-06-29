@@ -1,7 +1,6 @@
 # uname() error回避
 import platform
 print("platform", platform.uname())
- 
 
 from sqlalchemy import create_engine, insert, delete, update, select
 import sqlalchemy
