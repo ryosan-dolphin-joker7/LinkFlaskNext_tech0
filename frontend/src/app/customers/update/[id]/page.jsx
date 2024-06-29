@@ -10,11 +10,17 @@ export default function UpdatePage(props) {
   const id = props.params.id;
   const formRef = useRef();
   const [customerInfo, setCustomerInfo] = useState([]);
+  const [error, setError] = useState(null); // エラーステートを追加
 
   useEffect(() => {
     const fetchAndSetCustomer = async () => {
-      const customerData = await fetchCustomer(id);
-      setCustomerInfo(customerData[0]);
+      try {
+        const customerData = await fetchCustomer(id);
+        setCustomerInfo(customerData[0]);
+      } catch (err) {
+        setError("Failed to fetch customer data");
+        console.error(err);
+      }
     };
     fetchAndSetCustomer();
   }, []);
@@ -25,7 +31,14 @@ export default function UpdatePage(props) {
     try {
       const result = await updateCustomer(formData);
       console.log("Customer updated successfully:", result);
-      router.push(`./${formData.get("customer_id")}/confirm`);
+
+      // 更新後に顧客情報を再フェッチ
+      const updatedCustomerData = await fetchCustomer(id);
+      setCustomerInfo(updatedCustomerData[0]);
+
+      // 確認ページにリダイレクト
+      const customerId = formData.get("customer_id");
+      router.push(`/customers/update/${customerId}/confirm`);
     } catch (error) {
       console.error("Error updating customer:", error);
     }
@@ -35,6 +48,10 @@ export default function UpdatePage(props) {
   const previous_customer_id = customerInfo.customer_id;
   const previous_age = customerInfo.age;
   const previous_gender = customerInfo.gender;
+
+  if (error) {
+    return <div className="alert alert-error p-4 text-center">{error}</div>;
+  }
 
   return (
     <>
@@ -82,7 +99,10 @@ export default function UpdatePage(props) {
               </p>
             </div>
             <div className="flex justify-center">
-              <button className="btn btn-primary m-4 text-2xl">更新</button>
+              {/* 更新ボタンを押したらhandleSubmit関数が実行される */}
+              <button className="btn btn-primary m-4 text-2xl" type="submit">
+                更新
+              </button>
               <Link href="/">
                 <button className="btn btn-primary m-4 text-2xl">戻る</button>
               </Link>

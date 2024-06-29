@@ -11,7 +11,8 @@ import pandas as pd
 
 from db_control.connect import engine
 from db_control.mymodels import Customers
- 
+from sqlalchemy import text
+
 
 def myinsert(mymodel, values):
     # session構築
@@ -27,11 +28,11 @@ def myinsert(mymodel, values):
     except sqlalchemy.exc.IntegrityError:
         print("一意制約違反により、挿入に失敗しました")
         session.rollback()
- 
+
     # セッションを閉じる
     session.close()
     return "inserted"
- 
+
 def myselect(mymodel, customer_id):
     # session構築
     Session = sessionmaker(bind=engine)
@@ -86,17 +87,24 @@ def myupdate(mymodel, values):
 
     customer_id = values.pop("customer_id")
  
-    query = "お見事！E0002の原因はこのクエリの実装ミスです。正しく実装しましょう"
+    # 正しいクエリを設定
+    query = text("""
+    UPDATE customers 
+    SET customer_name = :customer_name, age = :age, gender = :gender 
+    WHERE customer_id = :customer_id
+    """)
+
     try:
         # トランザクションを開始
         with session.begin():
-            result = session.execute(query)
+            result = session.execute(query, {**values, "customer_id": customer_id})
     except sqlalchemy.exc.IntegrityError:
         print("一意制約違反により、挿入に失敗しました")
         session.rollback()
     # セッションを閉じる
     session.close()
     return "put"
+
 
 def mydelete(mymodel, customer_id):
     # session構築

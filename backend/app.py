@@ -56,17 +56,35 @@ def read_all_customer():
 
 @app.route("/customers", methods=['PUT'])
 def update_customer():
-    print("I'm in")
-    values = request.get_json()
-    values_original = values.copy()
-    model = mymodels.Customers
-    # values = {  "customer_id": "C004",
-    #             "customer_name": "鈴木C子",
-    #             "age": 44,
-    #             "gender": "男"}
-    tmp = crud.myupdate(model, values)
-    result = crud.myselect(mymodels.Customers, values_original.get("customer_id"))
-    return result, 200
+    try:
+        print("I'm in")
+        values = request.get_json()
+        if not values:
+            print("Invalid JSON payload")
+            return jsonify({"error": "Invalid JSON payload"}), 400
+
+        values_original = values.copy()
+        model = mymodels.Customers
+
+        print("Updating customer with values:", values)
+        try:
+            tmp = crud.myupdate(model, values)
+        except Exception as e:
+            print("Update failed:", str(e))
+            return jsonify({"error": f"Update failed: {str(e)}"}), 500
+
+        print("Fetching updated customer")
+        try:
+            result = crud.myselect(mymodels.Customers, values_original.get("customer_id"))
+        except Exception as e:
+            print("Select failed:", str(e))
+            return jsonify({"error": f"Select failed: {str(e)}"}), 500
+
+        return result, 200
+    except Exception as e:
+        print("Error occurred:", str(e))
+        return jsonify({"error": str(e)}), 500
+
 
 @app.route("/customers", methods=['DELETE'])
 def delete_customer():
