@@ -117,7 +117,7 @@ def mydelete(mymodel, customer_id):
     except sqlalchemy.exc.IntegrityError:
         print("一意制約違反により、挿入に失敗しました")
         session.rollback()
- 
+
     # セッションを閉じる
     session.close()
     return customer_id + " is deleted"
