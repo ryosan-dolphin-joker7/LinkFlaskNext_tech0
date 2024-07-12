@@ -6,6 +6,7 @@ import { useState } from "react";
 import createCustomer from "./createCustomer";
 import Link from "next/link";
 
+// 顧客情報を作成するページコンポーネント
 export default function CreatePage() {
   const formRef = useRef();
   const router = useRouter();

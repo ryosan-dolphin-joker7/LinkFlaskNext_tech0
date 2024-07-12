@@ -8,6 +8,7 @@ from sqlalchemy.orm import sessionmaker
 import json
 import pandas as pd
 
+# データベース接続
 from db_control.connect import engine
 from db_control.mymodels import Customers
 from sqlalchemy import text
