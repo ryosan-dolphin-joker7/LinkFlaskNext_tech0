@@ -7,6 +7,7 @@ class Base(DeclarativeBase):
     pass
 
 
+# モデルクラスの定義
 class Customers(Base):
     # Customersクラス。顧客情報を表す。
     __tablename__ = 'customers'
@@ -15,6 +16,7 @@ class Customers(Base):
     age:Mapped[int] = mapped_column()  # 顧客の年齢。
     gender:Mapped[str] = mapped_column()  # 顧客の性別。
 
+# モデルクラスの定義
 class Items(Base):
     # Itemsクラス。商品情報を表す。
     __tablename__ = 'items'

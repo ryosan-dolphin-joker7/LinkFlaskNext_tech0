@@ -13,6 +13,7 @@ from db_control.mymodels import Customers
 from sqlalchemy import text
 
 
+# データベースに追加する関数
 def myinsert(mymodel, values):
     # session構築
     Session = sessionmaker(bind=engine)
@@ -32,6 +33,7 @@ def myinsert(mymodel, values):
     session.close()
     return "inserted"
 
+# データベース操作の関数
 def myselect(mymodel, customer_id):
     # session構築
     Session = sessionmaker(bind=engine)
@@ -59,7 +61,7 @@ def myselect(mymodel, customer_id):
     session.close()
     return result_json
 
-
+# データベース操作の関数
 def myselectAll(mymodel):
     # session構築
     Session = sessionmaker(bind=engine)
@@ -79,13 +81,14 @@ def myselectAll(mymodel):
     session.close()
     return result_json
 
+# データベースを更新する関数
 def myupdate(mymodel, values):
     # session構築
     Session = sessionmaker(bind=engine)
     session = Session()
 
     customer_id = values.pop("customer_id")
- 
+
     # 正しいクエリを設定
     query = text("""
     UPDATE customers 
@@ -104,7 +107,7 @@ def myupdate(mymodel, values):
     session.close()
     return "put"
 
-
+# データベースから削除する関数
 def mydelete(mymodel, customer_id):
     # session構築
     Session = sessionmaker(bind=engine)

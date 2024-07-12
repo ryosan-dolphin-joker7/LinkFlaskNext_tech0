@@ -4,9 +4,11 @@ import Link from "next/link"; // ページ間リンクを作成するための�
 import { useEffect, useState } from "react"; // Reactのフック（useEffectとuseState）をインポートしています。
 import fetchCustomers from "./fetchCustomers"; // 顧客データを取得する関数をインポートしています。
 
+// 顧客情報を表示するページコンポーネントを定義しています。
 export default function Page() {
   const [customerInfos, setCustomerInfos] = useState([]); // 顧客情報を格納するための状態を初期化しています。
 
+  // コンポーネントがマウントされたときに顧客データを取得して状態に設定する処理を定義しています。
   useEffect(() => {
     const fetchAndSetCustomer = async () => {
       const customerData = await fetchCustomers(); // fetchCustomers関数を呼び出し、顧客データを取得しています。
@@ -15,6 +17,7 @@ export default function Page() {
     fetchAndSetCustomer(); // コンポーネントがマウントされたときにfetchAndSetCustomer関数を実行します。
   }, []); // 第二引数に空配列を指定することで、このuseEffectはコンポーネントのマウント時に一度だけ実行されます。
 
+  // 顧客情報を表示するコンポーネントをレンダリングしています。
   return (
     <>
       <div className="p-4">
